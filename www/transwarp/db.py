@@ -126,6 +126,7 @@ def create_engine(user , passwd , database , **kw):
     defaults = dict(use_unicode = True , charset = 'utf8' , collation = 'utf8_general_ci' , autocommit = False)
     for k , v in defaults.iteritems():
         params[k] = kw.pop(k , v)
+    #把defaults的值放进params中
     params.update(kw)
     params['buffered'] = True
     #初始化全局变量engine
@@ -151,6 +152,9 @@ class _ConnectionCtx(object):
             _db_ctx.cleanup()
 
 def connection():
+    '''
+    好像未用到
+    '''
     return _ConnectionCtx()
 
 def with_connection(func):
