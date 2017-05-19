@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}无权访问{% endblock title %}
+
+<!--{ % block cssjs1 %}-->
+<!--<link rel="stylesheet" href="{ % static 'css/bootstrap.css' %}">-->
+<!--{ % endblock cssjs1 %}-->
+
+{% block main %}
+  <h1>页面被禁止访问</h1>
+
+  <pre>
+    needle说: 这是个403(forbidden)页面, 肯定是权限问题.
+    这个页面怎么不会调用?
+  </pre>
+
+  <pre>Our engineers have been notified, so check back later.</pre>
+{% endblock main %}
+  
+<!--{ % block cssjs2 %}-->
+<!--<script src="{ % static 'js/jquery.js' %}"></script>-->
+<!--<script src="{ % static 'js/bootstrap.js' %}"></script>-->
+<!--{ % endblock cssjs2 %}-->

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}TEMPLATE_BASE{% endblock title %}
+
+{% block cssjs1 %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'css/customed.css' %}">
+{% endblock cssjs1 %}
+
+{% block header %}
+{% endblock header %}
+
+{% block main %}
+  <pre>
+extends_base.html是一个基于base.html模板的模板~~
+
+过程是这样的:
+
+bs3_template.html是一个bootstrap3模板
+将bs3_template.html改写成base.html
+base.html是一个嵌入了各种block的django模板
+
+extends_base.html是一个只有纯block的模板
+专门被用来复制此文件, 并专注于写html内容
+  </pre>
+{% endblock main %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block cssjs2 %}
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="{% static 'js/customed.js' %}"></script>
+{% endblock cssjs2 %}

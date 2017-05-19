@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}找不到页面{% endblock %}
+
+<!--{ % block cssjs1 %}-->
+<!--<link rel="stylesheet" href="{ % static 'css/bootstrap.css' %}">-->
+<!--{ % endblock cssjs1 %}-->
+
+{% block main %}
+  <div class="container-fluid">
+  <hr>
+    <h3><p class="text-danger text-center">
+    needle说: 这是个404页面: 找不到页面.
+    </p></h3>
+  </div><!-- /.container-fluid -->
+{% endblock main %}
+
+<!--{ % block cssjs2 %}-->
+<!--<script src="{ % static 'js/jquery.js' %}"></script>-->
+<!--<script src="{ % static 'js/bootstrap.js' %}"></script>-->
+<!--{ % endblock cssjs2 %}-->

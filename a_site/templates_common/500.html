@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}内部出错{% endblock title %}
+
+<!--{ % block cssjs1 %}-->
+<!--<link rel="stylesheet" href="{ % static 'css/bootstrap.css' %}">-->
+<!--{ % endblock cssjs1 %}-->
+
+{% block main %}
+  <h3><p class="text-warning text-center">服务器内部出错啦~</p></h3>
+
+  <pre>
+<span class="text-danger">
+needle说, 这是个500页面: 内部出错.
+</span>
+  Sorry, but the requested page is unavailable due to a
+  server hiccup.</pre>
+
+  <pre>Our engineers have been notified, so check back later.</pre>
+{% endblock main %}
+  
+<!--{ % block cssjs2 %}-->
+<!--<script src="{ % static 'js/jquery.js' %}"></script>-->
+<!--<script src="{ % static 'js/bootstrap.js' %}"></script>-->
+<!--{ % endblock cssjs2 %}-->
