@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% load static %}
-{% load use_markdown %}
+{% load humanize %}
+{% load customed_tags %}
 
 {% block title %}{{a_article.title}}{% endblock title %}
 
@@ -15,28 +16,52 @@
     <div class="row">
       <div id="main-left" class="col-xs-offset-1 col-xs-8">
 
-        <div id="an_article" class="row" style="background-color: #eee; min-height: 600px;">
-          <div class="col-xs-offset-1 col-xs-10">
+        <div id="an_article" class="row" style="background-color: #fff; min-height: 600px;">
+          <div class="col-xs-12">
 
-            <h2 class="text-center">{{a_article.title}}</h2>
+            <h2 class="text-center">{{a_article.title}}{% if not a_article.is_original %}(转){% endif %}</h2>
 
-            <div class="row">
-              <div class="col-xs-12">
-                <ul class="list-inline">
-                  <li>作者: needle</li>
-                  <li>{{a_article.pub_date}}</li>
-                  <li>阅读量: {{a_article.times}}</li>
-                {% for category_name in a_article.category.all %}
-                  <li class="text-info text-center">&nbsp;#{{category_name}}</li>
-                {% endfor %}
-                </ul>
-              </div>
+            <!--<div class="row"> 刻意去掉row, 使一级子div出现padding: 15px-->
+            <div class="col-xs-12" style="margin-bottom: 20px; border-bottom: 1px solid #dededc;">
+              <ul class="list-inline">
+                <li>最后修改于: {{a_article.update_time}}</li>
+                {% if a_article.times >= 2000 %}
+                <li>阅读量: <span class="text-danger">{{a_article.times | intword}}</span></li>
+                {% else %}
+                <li>阅读量: {{a_article.times}}</li>
+                {% endif %}
+                <li>
+                  <span class="glyphicon glyphicon-tag" style="top: 5px;"></span>
+                  <span class="text-info">
+                  {% for category_name in a_article.category.all %}
+                  <a href="/category/{{category_name.id}}/page/1">{{category_name}}</a>{% if not forloop.last %},{% endif %}
+                  {% endfor %}
+                  </span>
+                </li>
+              </ul>
             </div>
+            <!--</div>-->
 
-            <!--<div class="summary" style="min-height: 200px; margin-left: -30px; margin-right: -30px; padding-top: 0px; background-color: #eff">-->
-            <div class="summary" style="min-height: 200px; background-color: #eff">
+            <div class="content" style="min-height: 380px;">
               {{a_article.contents | custom_markdown}}
             </div>
+
+          {% if a_article.is_original %}
+            <div class="copyright alert alert-warning">
+            <p class="text-muted">本文作者：<a class="text-muted" href="/">needle</a></p>
+            <p class="text-muted">发表于：{{a_article.pub_date}}</p>
+            <p class="text-muted">本文地址：<a class="text-muted" href="http://{{request.get_host}}{{request.path}}">http://{{request.get_host}}{{request.path}}</a></p>
+            <p class="text-muted">转载时必须以链接形式注明原始出处及本声明。</p>
+            </div>
+          {% else %}
+            <div class="copyright alert alert-warning">
+            <p class="text-muted">本人转载于：{{a_article.pub_date}}</p>
+            <hr>
+            <p class="text-muted">原文属于：{{a_article.original_author}}</p>
+            <p class="text-muted">原文地址：<a class="text-muted" target="_blank" href="{{a_article.original_url}}">{{a_article.original_url}}</a></p>
+            <p class="text-muted">转载时必须以链接形式注明原始出处及本声明。</p>
+            </div>
+          {% endif %}
 
           </div>
         </div>

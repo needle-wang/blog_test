@@ -2,16 +2,20 @@
   <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/">你的博客名</a>
+        <span class="navbar-brand">needle's blog</span>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="/">主页</a></li>
-          <li><a href="#about">VIM</a></li>
-          <li><a href="#contact">python</a></li>
+          <li><a href="#about">python</a></li>
+          <li><a href="#about">vim</a></li>
+          <li><a href="#contact">关于</a></li>
         </ul>
         <form action="/search/pagenum/1" class="navbar-form navbar-right" role="search">
           <div class="form-group">
+          <!--本来复选框及搜索关键字的状态应该保留在返回页中:-->
+          <!--1.用会话: 由于某个我不理解的原因, 在无关键字时复选框状态会有无法保留的bug-->
+          <!--2.用ajax: 要改页面的结构, 数据的提交及显示的处理, 改动太大, 目前不改.-->
 
             <div class="checkbox">
               <label>
@@ -25,8 +29,8 @@
             </div>
             
           {% if current_category %}
-            <input type="text" name="q" class="form-control" placeholder="当前分类中搜索..." value="">
             <input type="hidden" name="c_id" class="form-control" value="{{current_category.id}}">
+            <input type="text" name="q" class="form-control" placeholder="当前分类中搜索..." value="">
           {% else %}
             <input type="text" name="q" class="form-control" placeholder="全站搜索..." value="">
           {% endif %}

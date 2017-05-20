@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% load static %}
-{% load use_markdown %}
+{% load humanize %}
+<!--{ % load customed_tags %}-->
 
 {% block title %}博客首页{% endblock title %}
 
@@ -17,25 +18,34 @@
         <div id="main-left" class="col-xs-8" style="min-height: 800px;">
 
           {% for a_article in article_list %}
-          <div id="an_article" class="row" style="background-color: #eee; margin-bottom: 20px;">
-            <div class="col-xs-offset-1 col-xs-10" style="height: 300px;">
+          <div id="an_article" class="row" style="background-color: #eee; margin-bottom: 12px;">
+            <div class="col-xs-12" style="min-height: 120px;">
 
-              <h2 class="text-center"><a href="/article/{{a_article.id}}" target="_blank">{{a_article.title}}</a></h2>
+              <h3 style="margin-top: 12px;"><a href="/article/{{a_article.id}}" style="color: #3d4450;" target="_blank">{{a_article.title}}{% if not a_article.is_original %}(转){% endif %}</a></h3>
 
               <div class="row">
                 <div class="col-xs-12">
                   <ul class="list-inline">
-                    <li>{{a_article.pub_date}}</li>
+                    <li>最后修改于: {{a_article.update_time}}</li>
+                    {% if a_article.times >= 2000 %}
+                    <li>阅读量: <span class="text-danger">{{a_article.times | intword}}</span></li>
+                    {% else %}
                     <li>阅读量: {{a_article.times}}</li>
-                  {% for category_name in a_article.category.all %}
-                    <li class="text-info text-center">&nbsp;#{{category_name}}</li>
-                  {% endfor %}
+                    {% endif %}
+                    <li>
+                      <span class="glyphicon glyphicon-tag" style="top: 5px;"></span>
+                      <span>
+                      {% for category_name in a_article.category.all %}
+                        <a href="/category/{{category_name.id}}/page/1">{{category_name}}</a>{% if not forloop.last %},{% endif %}
+                      {% endfor %}
+                      </span>
+                    </li>
                   </ul>
                 </div>
               </div>
 
-              <div class="summary" style="height: 200px; margin-left: -30px; margin-right: -30px; padding-top: 0px; background-color: #eff; overflow-y: auto"><p>
-                <center>{{a_article.contents | slice:"200"}}</center></p>
+              <div class="digest" style="background-color: #f6f6f6; border-radius: 4px; overflow-y: auto;">
+                <p style="padding: 6px 0 0 18px;">{{a_article.digest}}</p>
               </div>
 
             </div>
@@ -74,16 +84,16 @@
 
         <div id="main-right" class="col-xs-4">
           <div class="row">
-            <div class="col-xs-offset-1 col-xs-10" style="min-height: 700px;background-color: #eee;">
+            <div class="col-xs-offset-1 col-xs-10" style="min-height: 700px; background-color: #eee;">
               <h3 style="border-bottom: 1px solid #d3d3d3; padding: 1px 0 6px 6px;">标签</h3>
               <ul style="padding-left: 35px">
-                {% for an_category, count in category_dict.items %}
-                  {% ifequal an_category current_category %}
-                <li style="font-size: 20px; line-height: 30px;background-color: #e1e1e8"><a href="/category/{{an_category.id}}/page/1" style="color: #000;"><em>{{an_category}}（{{count}}）</em></a></li>
-                  {% else %}
-                <li style="font-size: 20px; line-height: 30px;"><a href="/category/{{an_category.id}}/page/1" style="color: #666;"><em>{{an_category}}（{{count}}）</em></a></li>
-                  {% endifequal %}
-                {% endfor %}
+              {% for an_category_name, an_category_id, count in category_all_list %}
+                {% ifequal an_category_id current_category.id %}
+                <li style="font-size: 20px; line-height: 30px;background-color: #e1e1e8"><a href="/category/{{an_category_id}}/page/1" style="color: #000;"><em>{{an_category_name}}（{{count}}）</em></a></li>
+                {% else %}
+                <li style="font-size: 20px; line-height: 30px;"><a href="/category/{{an_category_id}}/page/1" style="color: #666;"><em>{{an_category_name}}（{{count}}）</em></a></li>
+                {% endifequal %}
+              {% endfor %}
               </ul>
             </div>
           </div>

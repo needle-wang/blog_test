@@ -14,3 +14,4 @@ register = template.Library()
 @stringfilter
 def custom_markdown(value):
   return mark_safe(mistune.markdown(force_text(value)))
+

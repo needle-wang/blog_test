@@ -6,16 +6,23 @@ from __future__ import unicode_literals
 from django.db import models
 # from django.utils.encoding import python_2_unicode_compatible
 
+from a_site.settings import OWNER
 
 class Article(models.Model):
 
-  title = models.CharField(u'标题', max_length = 50)
-  contents = models.TextField(u'内容')
-  times = models.IntegerField(u'阅读量', default = 0, editable = False)
+  title = models.CharField(verbose_name = u'标题', max_length = 100)
+  digest = models.CharField(verbose_name = u'摘要', default = "没有摘要...", max_length = 200)
+  contents = models.TextField(verbose_name = u'内容')
+  times = models.DecimalField(verbose_name = u'阅读量', default = 0, max_digits = 15, decimal_places = 0, editable = False)
+  # category = models.ManyToManyField('Category', through = 'Article_Category')
+  category = models.ManyToManyField('Category', verbose_name = u'标签')
+  is_original = models.BooleanField(verbose_name = u'原创', default = True)
+  original_author = models.CharField(verbose_name = u'原文作者', default = OWNER, max_length = 100, null = True, blank = True)
+  original_url = models.URLField(verbose_name = u'原文地址(原创文可不填)', null = True, blank = True)
 
-  pub_date = models.DateTimeField(u'发表时间', auto_now_add = True, editable = True)
-  update_time = models.DateTimeField(u'最后一次修改时间', auto_now = True, null = True)
-  category = models.ManyToManyField('Category', through = 'Article_Category')
+  #下面两个时间为什么不在后台显示?
+  pub_date = models.DateTimeField(verbose_name = u'发表时间', auto_now_add = True, editable = True)
+  update_time = models.DateTimeField(verbose_name = u'最后一次修改时间', auto_now = True, null = True)
 
   def __str__(self):        # Python3
     return self.title
@@ -33,7 +40,12 @@ class Article(models.Model):
     verbose_name_plural = verbose_name
 
 class Category(models.Model):
-  name = models.CharField(u'类名', max_length = 50)
+  '''
+  分类向来是个大问题(标签或者分类会有从属, 交叉等关系)
+  我现在不想解决这么复杂的问题, 手动设置吧
+  '''
+  name = models.CharField(verbose_name = u'标签', max_length = 50)
+  prefix_for_sort = models.CharField(verbose_name = u'标签前缀(用于子类标签排序)', default = '1.1', max_length = 60)
 
   def __str__(self):        # Python3
     return self.name
@@ -45,13 +57,17 @@ class Category(models.Model):
     # return ','.join([i.title for i in self.article_set.all()])
 
   class Meta:
-    verbose_name = '类名'
+    verbose_name = '标签'
     verbose_name_plural = verbose_name
+    ordering = ['prefix_for_sort']
 
-class Article_Category(models.Model):
-  '''
-  多对多的关系表, model化 便于查询
-  '''
-  article = models.ForeignKey(Article)
-  category = models.ForeignKey(Category)
-
+# class Article_Category(models.Model):
+  # '''
+  # 多对多的关系表, model化可便于查询
+  # 但为什么会导致Article的category字段无法在admin后台显示?
+  # 因为: 自定义的显式的多对多model与隐式的方法集不同, 见文档
+  # 还是不要自定义, 我搞不定
+  # 另: 隐式的model名字是: Article_category
+  # '''
+  # article = models.ForeignKey(Article, on_delete=models.CASCADE)
+  # category = models.ForeignKey(Category, on_delete=models.CASCADE)
