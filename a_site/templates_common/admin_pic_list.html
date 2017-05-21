@@ -1,0 +1,17 @@
+{% extends "admin/change_list.html" %}
+
+{% block filters %}
+<div>
+  <form enctype="multipart/form-data" action="add/" method="post" id="picmanage_form">
+    {% csrf_token %}
+    <label for="id_name">名称:</label>
+    <input type="text" name="name" maxlength="50" id="id_name" class="vTextField">
+
+    <label class="required" for="id_url">URL:</label>
+    <input type="file" name="url" required id="id_url">
+
+    <input type="submit" value="保存" name="_save" />
+  </form>
+</div>
+{{block.super}}
+{% endblock %}

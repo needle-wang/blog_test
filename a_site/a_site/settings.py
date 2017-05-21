@@ -32,7 +32,8 @@ ALLOWED_HOSTS = ["*", ]
 
 
 # Application definition
-
+# If you use django.contrib.staticfiles,
+# runserver will serve static file automatically when DEBUG is set to True.
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "django.template.context_processors.media",
             ],
         },
     },
@@ -128,7 +130,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# STATIC_ROOT用于部署
+# STATIC_ROOT = "/var/www/example.com/static/"
 STATIC_URL = '/static/'
+
+# 部署时, 在nginx中配置类似如下:
+# location /media001 {
+    # root {{BASE_DIR}}
+# }
+# 开发时用的多媒体目录(MEDIA_ROOT, MEDIA_URL): 
+# TEMPLATES中加入: "django.template.context_processors.media",
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media001')     #上传文件时需要
+MEDIA_URL = '/media/'
 
 LOGGING = {
     'version': 1,

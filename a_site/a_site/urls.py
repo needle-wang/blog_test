@@ -27,5 +27,12 @@ urlpatterns = [
     url(r'^page/(?P<pagenum>\d+)/$', v.index),
     url(r'^article/(\d+)/$', v.article_display),
     url(r'^category/(?P<category_id>\d+)/page/(?P<pagenum>\d+)/$', v.article_list_by_category),
-    url(r'^search/pagenum/(\d+)$', v.article_list_by_search),
+    url(r'^search/pagenum/(\d+)/$', v.article_list_by_search),
 ]
+
+# 开发测试 多媒体文件时用的:
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
