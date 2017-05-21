@@ -7,8 +7,7 @@
 {% block title %}博客首页{% endblock title %}
 
 <!--{ % block cssjs1 %}-->
-<!--<link rel="stylesheet" href="{ % static 'css/bootstrap.css' %}">-->
-<!--<link rel="stylesheet" href="{ % static 'css/customed.css' %}">-->
+<!--<link href="{ % static 'css/bootstrap.css' %}" rel="stylesheet">-->
 <!--{ % endblock cssjs1 %}-->
 
 {% block main %}
@@ -18,7 +17,7 @@
         <div id="main-left" class="col-xs-8" style="min-height: 800px;">
 
           {% for a_article in article_list %}
-          <div id="an_article" class="row" style="background-color: #eee; margin-bottom: 12px;">
+          <div id="an_article" class="row" style="background-color: #eee; border-radius: 4px; margin-bottom: 12px;">
             <div class="col-xs-12" style="min-height: 120px;">
 
               <h3 style="margin-top: 12px;"><a href="/article/{{a_article.id}}" style="color: #3d4450;" target="_blank">{{a_article.title}}{% if not a_article.is_original %}(转){% endif %}</a></h3>
@@ -84,7 +83,7 @@
 
         <div id="main-right" class="col-xs-4">
           <div class="row">
-            <div class="col-xs-offset-1 col-xs-10" style="min-height: 700px; background-color: #eee;">
+            <div class="col-xs-offset-1 col-xs-10" style="min-height: 700px; background-color: #eee; border-radius: 4px;">
               <h3 style="border-bottom: 1px solid #d3d3d3; padding: 1px 0 6px 6px;">标签</h3>
               <ul style="padding-left: 35px">
               {% for an_category_name, an_category_id, count in category_all_list %}

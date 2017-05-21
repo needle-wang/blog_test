@@ -29,6 +29,13 @@ def index(request, pagenum = 1):
                 context = {'article_list'      : make_paginator(article_all, pagenum),
                            'category_all_list' : get_category_all_list()})
 
+
+def about(request):
+  '''
+  关于
+  '''
+  return render(request, 'about.html')
+
 def article_display(request, article_id):
   '''
   文章显示页

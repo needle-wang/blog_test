@@ -7,7 +7,8 @@
 <title>{% block title %}{% endblock title %}</title>
 <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon">{% block cssjs1 %}
 <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-{% endblock cssjs1 %}<script src="http://127.0.0.1:9001/js/socket.js"></script>
+{% endblock cssjs1 %}<link href="{% static 'css/customed.css' %}" rel="stylesheet">
+<script src="http://127.0.0.1:9001/js/socket.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>

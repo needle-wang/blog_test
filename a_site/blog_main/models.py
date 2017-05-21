@@ -11,7 +11,7 @@ from a_site.settings import OWNER
 class Article(models.Model):
 
   title = models.CharField(verbose_name = u'标题', max_length = 100)
-  digest = models.CharField(verbose_name = u'摘要', default = '没有摘要...', max_length = 200)
+  digest = models.CharField(verbose_name = u'摘要', default = '摘要:...', max_length = 200)
   contents = models.TextField(verbose_name = u'内容')
   times = models.DecimalField(verbose_name = u'阅读量', default = 0, max_digits = 15, decimal_places = 0, editable = False)
   # category = models.ManyToManyField('Category', through = 'Article_Category')
@@ -75,6 +75,7 @@ class Category(models.Model):
 
 class PicManage(models.Model):
   name = models.CharField(verbose_name = u'名称', max_length = 50, null = True, blank = True)
+  # 没准改图片名比建日期目录更好一些.
   url = models.ImageField(verbose_name = u'URL', upload_to = u'uploadImages/%Y/%m/%d/')
   create_time = models.DateTimeField(u'创建时间', auto_now_add = True)
 

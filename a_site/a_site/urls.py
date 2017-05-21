@@ -24,6 +24,7 @@ from blog_main import views as v
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', v.index),
+    url(r'^about/$', v.about),
     url(r'^page/(?P<pagenum>\d+)/$', v.index),
     url(r'^article/(\d+)/$', v.article_display),
     url(r'^category/(?P<category_id>\d+)/page/(?P<pagenum>\d+)/$', v.article_list_by_category),

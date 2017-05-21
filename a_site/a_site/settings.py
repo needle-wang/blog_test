@@ -138,7 +138,7 @@ STATIC_URL = '/static/'
 # location /media001 {
     # root {{BASE_DIR}}
 # }
-# 开发时用的多媒体目录(MEDIA_ROOT, MEDIA_URL): 
+# 开发时用的多媒体目录(MEDIA_ROOT, MEDIA_URL):
 # TEMPLATES中加入: "django.template.context_processors.media",
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media001')     #上传文件时需要
 MEDIA_URL = '/media/'
