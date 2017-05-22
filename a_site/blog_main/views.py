@@ -54,7 +54,7 @@ def article_display(request, article_id):
 
 def article_list_by_category(request, category_id, pagenum = 1):
   '''
-  显示一个(指定的分类里的所有文章的)列表页
+  显示一个(指定的标签里的所有文章的)列表页
   '''
   try:
     current_category = Category.objects.get(id = category_id)
@@ -73,7 +73,7 @@ def article_list_by_search(request, pagenum = 1):
   '''
   kw in 标题 or 内容
   1. 在所有文章中搜索
-  2. 在当前分类中搜索
+  2. 在当前标签中搜索
   '''
   query_input_name = 'q'
   curr_category_input_name = 'c_id'
@@ -153,7 +153,7 @@ def article_list_by_search(request, pagenum = 1):
 
 def get_category_all_list():
   '''
-  页面上右侧的分类列表
+  页面上右侧的标签列表
   通用方法, 私有的, 不应该写成静态的
   return [(name, len(article_set), ]
   '''
