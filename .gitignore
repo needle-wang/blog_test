@@ -57,7 +57,7 @@ docs/_build/
 target/
 
 #db.sqlite3
-*.sqlite3
+#*.sqlite3
 migrations/
 media001/
 forms.py
