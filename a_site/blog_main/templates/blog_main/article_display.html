@@ -57,7 +57,11 @@
             <p class="text-muted">本人转载于：{{a_article.pub_date}}</p>
             <hr>
             <p class="text-muted">原文属于：{{a_article.original_author}}</p>
+            {% if a_article.original_url %}
             <p class="text-muted">原文地址：<a class="text-muted" target="_blank" href="{{a_article.original_url}}">{{a_article.original_url}}</a></p>
+            {% else %}
+            <p id="restrain" class="text-muted">原文地址：<a class="text-danger" href="#restrain">链接忘填了, 看下原作者对了没?</a></p>
+            {% endif %}
             <p class="text-muted">转载时必须以链接形式注明原始出处及本声明。</p>
             </div>
           {% endif %}

@@ -7,6 +7,8 @@ django-pagedown (python2下的此插件无法运行?)
 开发:  
 django1.10以上, python3通过  
 
+![博客截图](https://github.com/needle-wang/blog_test/blob/master/blog_screen.png)
+
 如果要使用, 要改页面, 自定义一些信息.  
 如果要用于部署, 还有一些设置要改啦.  
 
