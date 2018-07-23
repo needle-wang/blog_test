@@ -6,18 +6,18 @@ from __future__ import unicode_literals
 
 import logging
 
-from django.core.paginator import EmptyPage
-from django.core.paginator import Paginator
-from django.core.paginator import PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count, Q
 from django.http import Http404, HttpResponse, HttpResponseServerError
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
+
 # from .forms import SearchForm
-from .models import Article, Category#, Article_Category
+from .models import Article, Category  # , Article_Category
 
 logger = logging.getLogger('django')
 
-def index(request, pagenum = 1):
+
+def index(request, pagenum=1):
   '''
   首页
   '''
@@ -25,9 +25,13 @@ def index(request, pagenum = 1):
 
   article_all = Article.objects.order_by('-id')
 
-  return render(request, 'index.html',
-                context = {'article_list'      : make_paginator(article_all, pagenum),
-                           'category_all_list' : get_category_all_list()})
+  return render(
+    request,
+    'index.html',
+    context={
+      'article_list': make_paginator(article_all, pagenum),
+      'category_all_list': get_category_all_list()
+    })
 
 
 def about(request):
@@ -36,40 +40,49 @@ def about(request):
   '''
   return render(request, 'about.html')
 
+
 def article_display(request, article_id):
   '''
   文章显示页
   '''
   try:
-    a_article = Article.objects.get(id = article_id)
+    a_article = Article.objects.get(id=article_id)
     a_article.times += 1
     a_article.save()
-    return render(request, 'blog_main/article_display.html',
-                  context = {'a_article': a_article})
+    return render(
+      request,
+      'blog_main/article_display.html',
+      context={'a_article': a_article})
   except Article.DoesNotExist as e:
     # NotFound's status code is 404
     raise Http404
   except Article.MultipleObjectsReturned as e:
     raise HttpResponseServerError
 
-def article_list_by_category(request, category_id, pagenum = 1):
+
+def article_list_by_category(request, category_id, pagenum=1):
   '''
   显示一个(指定的标签里的所有文章的)列表页
   '''
   try:
-    current_category = Category.objects.get(id = category_id)
+    current_category = Category.objects.get(id=category_id)
     article_all = current_category.article_set.all().order_by('-id')
-    return render(request, 'list_by_category.html',
-                  context = {'current_category'  : current_category,
-                             'article_list'      : make_paginator(article_all, pagenum),
-                             'category_all_list' : get_category_all_list()})
+    return render(
+      request,
+      'list_by_category.html',
+      context={
+        'current_category': current_category,
+        'article_list': make_paginator(article_all, pagenum),
+        'category_all_list': get_category_all_list()
+      })
   except Category.DoesNotExist as e:
     # NotFound's status code is 404
     raise Http404
   except Category.MultipleObjectsReturned as e:
     raise HttpResponseServerError
 
-def article_list_by_search(request, pagenum = 1):
+
+def article_list_by_search(request, pagenum=1):
   '''
   kw in 标题 or 内容
   1. 在所有文章中搜索
@@ -82,7 +95,7 @@ def article_list_by_search(request, pagenum = 1):
   kw = request.GET.get(query_input_name, '')
   category_id = request.GET.get(curr_category_input_name, '')
   c_count = request.GET.getlist(checkbox_input_name)
-  
+
   if not kw:
     if category_id:
       return redirect('/category/' + category_id + '/page/1')
@@ -91,7 +104,7 @@ def article_list_by_search(request, pagenum = 1):
 
   if category_id:
     try:
-      current_category = Category.objects.get(id = category_id)
+      current_category = Category.objects.get(id=category_id)
     except Category.DoesNotExist as e:
       raise Http404
     except Category.MultipleObjectsReturned as e:
@@ -119,15 +132,15 @@ def article_list_by_search(request, pagenum = 1):
   elif len(c_count) == 1:
     if '1' in c_count:
       # 单标签的文章id列表
-      a_c_group = a_c_group.filter(count = 1).values('article_id')
-      qs = manager.filter(id__in = a_c_group)
+      a_c_group = a_c_group.filter(count=1).values('article_id')
+      qs = manager.filter(id__in=a_c_group)
     elif '2' in c_count:
       # 多标签的文章id列表
-      a_c_group = a_c_group.filter(count__gt = 1).values('article_id')
-      qs = manager.filter(id__in = a_c_group)
+      a_c_group = a_c_group.filter(count__gt=1).values('article_id')
+      qs = manager.filter(id__in=a_c_group)
     else:
       raise Http404('len(c_count)为1时, 既不是"1", 也不是"2"?')
-    
+
     c_count_str = checkbox_input_name + '=' + c_count[0]
 
   elif len(c_count) == 2:
@@ -139,17 +152,22 @@ def article_list_by_search(request, pagenum = 1):
     raise Http404('len(c_count)>2, why?')
 
   # if qs is not manager:
-    # print(qs.query)
+  # print(qs.query)
 
-  article_all = qs.filter(Q(title__icontains = kw) | Q(contents__icontains = kw))\
-                       .order_by('-id')
+  article_all = qs.filter(Q(title__icontains=kw)
+                          | Q(contents__icontains=kw)).order_by('-id')
 
-  return render(request, 'list_by_search.html',
-                context = {'article_list'      : make_paginator(article_all, pagenum),
-                           'category_all_list' : get_category_all_list(),
-                           'kw'                : kw,
-                           'c_count_str'       : c_count_str,
-                           'current_category'  : current_category})
+  return render(
+    request,
+    'list_by_search.html',
+    context={
+      'article_list': make_paginator(article_all, pagenum),
+      'category_all_list': get_category_all_list(),
+      'kw': kw,
+      'c_count_str': c_count_str,
+      'current_category': current_category
+    })
+
 
 def get_category_all_list():
   '''
@@ -167,12 +185,14 @@ def get_category_all_list():
     category_to_sort.append(an_category_tmp)
 
   for prefix, an_category in sorted(category_to_sort):
-    an_category_mesg = (an_category.name, an_category.id, len(an_category.article_set.all()))
+    an_category_mesg = (an_category.name, an_category.id,
+                        len(an_category.article_set.all()))
     category_all_to_list.append(an_category_mesg)
 
   return category_all_to_list
 
-def make_paginator(article_all, pagenum, limit = 5):
+
+def make_paginator(article_all, pagenum, limit=5):
   '''
   实现翻页按钮逻辑
   '''

@@ -7,5 +7,5 @@ from django.apps import AppConfig
 
 
 class BlogMainConfig(AppConfig):
-  name = 'blog_main'        #这是model的名字, 不能改
+  name = 'blog_main'  # 这是model的名字, 不能改
   verbose_name = '博客app'

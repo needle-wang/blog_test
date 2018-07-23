@@ -18,7 +18,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -28,32 +27,33 @@ SECRET_KEY = '*&)*$o4mzi-@#vu&_z9xoj*74zm7*y4@)s2s=gra&_#wuhonep'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*", ]
-
+ALLOWED_HOSTS = [
+  "*",
+]
 
 # Application definition
 # If you use django.contrib.staticfiles,
 # runserver will serve static file automatically when DEBUG is set to True.
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    'pagedown',
-    'blog_main',
+  'django.contrib.admin',
+  'django.contrib.auth',
+  'django.contrib.contenttypes',
+  'django.contrib.sessions',
+  'django.contrib.messages',
+  'django.contrib.staticfiles',
+  'django.contrib.humanize',
+  'pagedown',
+  'blog_main',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+  'django.middleware.security.SecurityMiddleware',
+  'django.contrib.sessions.middleware.SessionMiddleware',
+  'django.middleware.common.CommonMiddleware',
+  'django.middleware.csrf.CsrfViewMiddleware',
+  'django.contrib.auth.middleware.AuthenticationMiddleware',
+  'django.contrib.messages.middleware.MessageMiddleware',
+  'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'a_site.urls'
@@ -62,56 +62,57 @@ LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        #先搜这个目录, 再搜app下的
-        'DIRS': [os.path.join(BASE_DIR, 'templates_common'),],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'debug': DEBUG,
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                "django.template.context_processors.media",
-            ],
-        },
+  {
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    # 先搜这个目录, 再搜app下的
+    'DIRS': [
+      os.path.join(BASE_DIR, 'templates_common'),
+    ],
+    'APP_DIRS': True,
+    'OPTIONS': {
+      'debug':
+      DEBUG,
+      'context_processors': [
+        'django.template.context_processors.debug',
+        'django.template.context_processors.request',
+        'django.contrib.auth.context_processors.auth',
+        'django.contrib.messages.context_processors.messages',
+        "django.template.context_processors.media",
+      ],
     },
+  },
 ]
 
 WSGI_APPLICATION = 'a_site.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+  'default': {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+  }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+  {
+    'NAME':
+    'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+  },
+  {
+    'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+  },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -126,7 +127,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -136,52 +136,48 @@ STATIC_URL = '/static/'
 
 # 部署时, 在nginx中配置类似如下:
 # location /media001 {
-    # root {{BASE_DIR}}
+# root {{BASE_DIR}}
 # }
 # 开发时用的多媒体目录(MEDIA_ROOT, MEDIA_URL):
 # TEMPLATES中加入: "django.template.context_processors.media",
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media001')     #上传文件时需要
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media001')  # 上传文件时需要
 MEDIA_URL = '/media/'
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-
-    'formatters': {
-        'simple': {
-            'format': '[%(levelname)s] %(module)s : %(message)s'
-        },
-        'verbose': {
-            'format': '[%(asctime)s] [%(levelname)s] %(module)s : %(message)s'
-        }
+  'version': 1,
+  'disable_existing_loggers': False,
+  'formatters': {
+    'simple': {
+      'format': '[%(levelname)s] %(module)s : %(message)s'
     },
-
-    'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': '%s/debug.log' % BASE_DIR,
-        },
-        'console': {
-            'level': 'ERROR',
-            'class': 'logging.StreamHandler',
-        },
+    'verbose': {
+      'format': '[%(asctime)s] [%(levelname)s] %(module)s : %(message)s'
+    }
+  },
+  'handlers': {
+    'file': {
+      'level': 'ERROR',
+      'class': 'logging.FileHandler',
+      'filename': '%s/debug.log' % BASE_DIR,
     },
-
-    'loggers': {
-        '': {
-            'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-        'django': {
-            'handlers': ['file'],
-            'formatters': ['verbose'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
+    'console': {
+      'level': 'ERROR',
+      'class': 'logging.StreamHandler',
     },
+  },
+  'loggers': {
+    '': {
+      'handlers': ['file'],
+      'level': 'ERROR',
+      'propagate': True,
+    },
+    'django': {
+      'handlers': ['file'],
+      'formatters': ['verbose'],
+      'level': 'DEBUG',
+      'propagate': True,
+    },
+  },
 }
 
 OWNER = 'needle'
-
