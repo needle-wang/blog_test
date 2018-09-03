@@ -2,18 +2,16 @@
 ## 2017-05-22
 
 
-**required**  
-python3  
-`pip3 install django-pagedown`
+**required:**  
+python3, django1.10+:  
+`pip3 install django`  
+`pip3 install django-pagedown`  
 `pip3 install mistune`
-
-开发:  
-django1.10+
 
 ![博客截图](https://github.com/needle-wang/blog_test/blob/master/blog_screen.png)
 
 如果要使用, 要改页面, 自定义一些信息.  
-如果要用于部署, 还有一些设置要改啦.  
+如果要用于部署, 还有一些设置要改啦(感觉用django好麻烦~).  
 
 对于一个网站来说, 如果图片太多太大, 站点流量耗费会很大,  
 这时候, 得用其他的图床了.  
