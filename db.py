@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding: utf-8
 # 数据库模块 , 实现基本的数据库访问API
 # 2015年 04月 18日 星期六 12:07:41 CST
