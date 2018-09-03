@@ -1,11 +1,14 @@
 # a simple django blog.
-#2017-05-22
+## 2017-05-22
 
-依赖:  
-django-pagedown (python2下的此插件无法运行?)  
+
+**required**  
+python3  
+`pip3 install django-pagedown`
+`pip3 install mistune`
 
 开发:  
-django1.10以上, python3通过  
+django1.10+
 
 ![博客截图](https://github.com/needle-wang/blog_test/blob/master/blog_screen.png)
 
